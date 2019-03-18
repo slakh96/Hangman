@@ -13,99 +13,107 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR);
 endmodule
 
 module control_letter(input guess, input clk, input resetn, input go, input letter1, input letter2, input letter3, input letter4, input letter5,
-	output enable_l1, output enable_l2, output enable_l3, output enable_l4, output enable_l5);
+	output reg enable_l1, output reg enable_l2, output reg enable_l3, output reg enable_l4, output reg enable_l5);
 	//Inputs letters of correct word so that we can compare and find out what state to go to, outputs the enable for each of the registers, 
 	//so that they can be loaded with ones (indicating that the specific letter position have been guessed right).
-	assign enable_l1 = 1'b0;
-	assign enable_l2 = 1'b0;
-	assign enable_l3 = 1'b0;
-	assign enable_l4 = 1'b0;
-	assign enable_l5 = 1'b0;
-	wire correct = 1'b0;
+	reg [4:0] current_state, next_state;
+	reg correct;
 	
     localparam  S_INCORRECT     = 4'd0,
                 S_INCORRECT_WAIT= 4'd1,
                 S_CORRECT       = 4'd2,
                 S_CORRECT_WAIT  = 4'd3;
     always@(*)
-    begin: state_table 
+    begin: state_table
+		enable_l1 = 1'b0;
+		enable_l2 = 1'b0;
+		enable_l3 = 1'b0;
+		enable_l4 = 1'b0;
+		enable_l5 = 1'b0;
+		correct = 1'b0;
             case (current_state)
                 S_INCORRECT: next_state = go ? S_INCORRECT_WAIT : S_INCORRECT; // Loop in current state until value is input
-                S_INCORRECT_WAIT: next_state = go ? S_INCORRECT_WAIT : begin// Loop in current state until go signal goes low
+                S_INCORRECT_WAIT: begin//next_state = go ? S_INCORRECT_WAIT : begin// Loop in current state until go signal goes low
 							//begin
 								//next_state = go ? S_INCORRECT_WAIT : S_LOAD_B; // Loop in current state until go signal goes low
-								if(guess == letter1)
-									begin
-										next_state = S_CORRECT;
-										enable_l1 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter2)
-									begin
-										next_state = S_CORRECT;
-										enable_l2 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter3)
-									begin
-										next_state = S_CORRECT;
-										enable_l3 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter4)
-									begin
-										next_state = S_CORRECT;
-										enable_l4 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter5)
-									begin
-										next_state = S_CORRECT;
-										enable_l5 = 1'b1;
-										correct = 1'b1;
-									end
-								if (correct == 1'b0)
-									next_state = S_INCORRECT;
-								
+							if (go) next_state = S_INCORRECT_WAIT;
+							else
+								begin
+									if(guess == letter1)
+										begin
+											next_state = S_CORRECT;
+											enable_l1 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter2)
+										begin
+											next_state = S_CORRECT;
+											enable_l2 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter3)
+										begin
+											next_state = S_CORRECT;
+											enable_l3 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter4)
+										begin
+											next_state = S_CORRECT;
+											enable_l4 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter5)
+										begin
+											next_state = S_CORRECT;
+											enable_l5 = 1'b1;
+											correct = 1'b1;
+										end
+									if (correct == 1'b0)
+										next_state = S_INCORRECT;
+									
+								end
 							end
 					 S_CORRECT: next_state = go ? S_CORRECT_WAIT : S_CORRECT; // Loop in current state until value is input
-                S_CORRECT_WAIT: next_state = go ? S_CORRECT_WAIT :  // Loop in current state until go signal goes low
-                S_INCORRECT_WAIT: next_state = go ? S_INCORRECT_WAIT : begin // Loop in current state until go signal goes low
-							//begin
-								//next_state = go ? S_INCORRECT_WAIT : S_LOAD_B; // Loop in current state until go signal goes low
-								if(guess == letter1)
+                S_CORRECT_WAIT: begin//next_state = go ? S_INCORRECT_WAIT : begin // Loop in current state until go signal goes low
+								if (go) 
+									next_state = S_INCORRECT_WAIT;
+								else
 									begin
-										next_state = S_CORRECT;
-										enable_l1 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter2)
-									begin
-										next_state = S_CORRECT;
-										enable_l2 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter3)
-									begin
-										next_state = S_CORRECT;
-										enable_l3 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter4)
-									begin
-										next_state = S_CORRECT;
-										enable_l4 = 1'b1;
-										correct = 1'b1;
-									end
-								if(guess == letter5)
-									begin
-										next_state = S_CORRECT;
-										enable_l5 = 1'b1;
-										correct = 1'b1;
-									end
-								if (correct == 1'b0)
-									next_state = S_INCORRECT;
-								
+									if(guess == letter1)
+										begin
+											next_state = S_CORRECT;
+											enable_l1 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter2)
+										begin
+											next_state = S_CORRECT;
+											enable_l2 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter3)
+										begin
+											next_state = S_CORRECT;
+											enable_l3 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter4)
+										begin
+											next_state = S_CORRECT;
+											enable_l4 = 1'b1;
+											correct = 1'b1;
+										end
+									if(guess == letter5)
+										begin
+											next_state = S_CORRECT;
+											enable_l5 = 1'b1;
+											correct = 1'b1;
+										end
+									if (correct == 1'b0)
+										next_state = S_INCORRECT;
+									
+								end
 							end
             default:     next_state = S_INCORRECT;
         endcase
