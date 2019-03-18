@@ -33,9 +33,7 @@ module control_letter(input guess, input clk, input resetn, input go, input lett
 		correct = 1'b0;
             case (current_state)
                 S_INCORRECT: next_state = go ? S_INCORRECT_WAIT : S_INCORRECT; // Loop in current state until value is input
-                S_INCORRECT_WAIT: begin//next_state = go ? S_INCORRECT_WAIT : begin// Loop in current state until go signal goes low
-							//begin
-								//next_state = go ? S_INCORRECT_WAIT : S_LOAD_B; // Loop in current state until go signal goes low
+                S_INCORRECT_WAIT: begin
 							if (go) next_state = S_INCORRECT_WAIT;
 							else
 								begin
