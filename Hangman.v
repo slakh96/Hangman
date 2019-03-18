@@ -16,12 +16,14 @@ module control_letter(input guess, input clk, input resetn, input go, input lett
 	output enable_l1, output enable_l2, output enable_l3, output enable_l4, output enable_l5);
 	//Inputs letters of correct word so that we can compare and find out what state to go to, outputs the enable for each of the registers, 
 	//so that they can be loaded with ones (indicating that the specific letter position have been guessed right).
+	assign enable_l1 = 1'b0;
+	assign enable_l2 = 1'b0;
+	assign enable_l3 = 1'b0;
+	assign enable_l4 = 1'b0;
+	assign enable_l5 = 1'b0;
+	wire correct = 1'b0;
 	
-	//I THINK THAT WE HAVE TO SPLIT UP THE 'CORRECT' STATES INTO PER LETTER
     localparam  S_INCORRECT     = 4'd0,
-                S_INCORRECT_WAIT= 4'd1,
-                S_CORRECT       = 4'd2,
-                S_CORRECT_WAIT  = 4'd3;
                 S_INCORRECT_WAIT= 4'd1,
                 S_CORRECT       = 4'd2,
                 S_CORRECT_WAIT  = 4'd3;
@@ -29,20 +31,85 @@ module control_letter(input guess, input clk, input resetn, input go, input lett
     begin: state_table 
             case (current_state)
                 S_INCORRECT: next_state = go ? S_INCORRECT_WAIT : S_INCORRECT; // Loop in current state until value is input
-                S_INCORRECT_WAIT: 
-							begin
+                S_INCORRECT_WAIT: next_state = go ? S_INCORRECT_WAIT : begin// Loop in current state until go signal goes low
+							//begin
 								//next_state = go ? S_INCORRECT_WAIT : S_LOAD_B; // Loop in current state until go signal goes low
 								if(guess == letter1)
 									begin
-										
+										next_state = S_CORRECT;
+										enable_l1 = 1'b1;
+										correct = 1'b1;
 									end
+								if(guess == letter2)
+									begin
+										next_state = S_CORRECT;
+										enable_l2 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter3)
+									begin
+										next_state = S_CORRECT;
+										enable_l3 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter4)
+									begin
+										next_state = S_CORRECT;
+										enable_l4 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter5)
+									begin
+										next_state = S_CORRECT;
+										enable_l5 = 1'b1;
+										correct = 1'b1;
+									end
+								if (correct == 1'b0)
+									next_state = S_INCORRECT;
 								
 							end
 					 S_CORRECT: next_state = go ? S_CORRECT_WAIT : S_CORRECT; // Loop in current state until value is input
-                S_CORRECT_WAIT: next_state = go ? S_LOAD_B_WAIT : S_LOAD_C; // Loop in current state until go signal goes low
+                S_CORRECT_WAIT: next_state = go ? S_CORRECT_WAIT :  // Loop in current state until go signal goes low
+                S_INCORRECT_WAIT: next_state = go ? S_INCORRECT_WAIT : begin // Loop in current state until go signal goes low
+							//begin
+								//next_state = go ? S_INCORRECT_WAIT : S_LOAD_B; // Loop in current state until go signal goes low
+								if(guess == letter1)
+									begin
+										next_state = S_CORRECT;
+										enable_l1 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter2)
+									begin
+										next_state = S_CORRECT;
+										enable_l2 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter3)
+									begin
+										next_state = S_CORRECT;
+										enable_l3 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter4)
+									begin
+										next_state = S_CORRECT;
+										enable_l4 = 1'b1;
+										correct = 1'b1;
+									end
+								if(guess == letter5)
+									begin
+										next_state = S_CORRECT;
+										enable_l5 = 1'b1;
+										correct = 1'b1;
+									end
+								if (correct == 1'b0)
+									next_state = S_INCORRECT;
+								
+							end
             default:     next_state = S_INCORRECT;
         endcase
-    end // state_table	
+    end // state_table
 	
 
 endmodule
