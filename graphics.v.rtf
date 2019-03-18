@@ -1,0 +1,250 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red220\green161\blue13;}
+{\*\expandedcolortbl;;\cssrgb\c89412\c68627\c3922;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f0\fs24 \cf0 // Part 2 skeleton\
+\
+module graphics\
+	(\
+		CLOCK_50,						//	On Board 50 MHz\
+		// Your inputs and outputs here\
+        KEY,\
+        SW,\
+		// The ports below are for the VGA output.  Do not change.\
+		VGA_CLK,   						//	VGA Clock\
+		VGA_HS,							//	VGA H_SYNC\
+		VGA_VS,							//	VGA V_SYNC\
+		VGA_BLANK_N,						//	VGA BLANK\
+		VGA_SYNC_N,						//	VGA SYNC\
+		VGA_R,   						//	VGA Red{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR3yJ28kpdppIA6ppmul4zuxYV8tGHNQ726CAySbcJAoz7iqqAkdUAuQEV0&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+		VGA_G,	 						//	VGA Green{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR0CzUlBJhMxMB99fN654o30eIJgvO_A3lp0guHbndnm09oGPbkzhsuAU0E&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+		VGA_B   						//	VGA Blue{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR0KNuDv_yj7Y9cpt66-hgvlvUzwBBmQObatPxhGz9pID7m3nt4irjbmYAw&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+	);\
+\
+	input			CLOCK_50;				//	50 MHz\
+	input   {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR1Vv5iOglUH4SOhskBKqvkrtX8jIaxp7H3GuGZ51xFMAhFUmy20z0zWkYk&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}   SW;\
+	input   {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B3%3A0%5D%2F%3Ffbclid%3DIwAR0i395_qz67vBtLieU7imhGBrYb1_N0dkMbhGBseco1Y3xn8ccdZa07O0s&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [3:0]}}   KEY;\
+\
+	// Declare your inputs and outputs here\
+	// Do not change the following outputs\
+	output			VGA_CLK;   				//	VGA Clock\
+	output			VGA_HS;					//	VGA H_SYNC\
+	output			VGA_VS;					//	VGA V_SYNC\
+	output			VGA_BLANK_N;				//	VGA BLANK\
+	output			VGA_SYNC_N;				//	VGA SYNC\
+	output	{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR2qUi1Hl8myRBV6lt47Z2HHsojReStH0kQef0T_bH6SJ3KbDmdiW9ofdDg&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}	VGA_R;   				//	VGA Red{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR1lUL-t0yI4s1sNUWTnSICAsQbwoCF3gvACVxzu4pWfGBk12BHOFY9wCYY&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+	output	{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR2RwqXy_nM3yCjLLfOu7ge5ETBLb0cwdBO2WHQMiRz0HmUQrtVCZYTupJ4&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}	VGA_G;	 				//	VGA Green{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR05xAczLVfdgjepf_FOFpBph89GTq1X1WA531U7s0M8VZmVHe8TtKvsADM&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+	output	{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR2dnwvnQd2uoGvaqcTSmLOgeSxSgGzrRG2vOoiG7ExrudPkpmJ-yPaKX-I&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}	VGA_B;   				//	VGA Blue{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A0%5D%2F%3Ffbclid%3DIwAR1Vv5iOglUH4SOhskBKqvkrtX8jIaxp7H3GuGZ51xFMAhFUmy20z0zWkYk&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:0]}}\
+	\
+	wire resetn;\
+	assign resetn = KEY[0];\
+	\
+	// Create the colour, x, y and writeEn wires that are inputs to the controller.\
+	wire {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR2qUi1Hl8myRBV6lt47Z2HHsojReStH0kQef0T_bH6SJ3KbDmdiW9ofdDg&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} colour;\
+	wire {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B7%3A0%5D%2F%3Ffbclid%3DIwAR285zhRo0t90MkvvRKV9ZcX1xmobRN3ng5IgsrLfjrC0nn2fftwjMfgBFk&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [7:0]}} x;\
+	wire {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR0SmxdL7kj_IPih6bIrE2QcfNkfZli8OdEJ7iczzAHDkBzmtUjlUqp3z1k&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} y;\
+	wire writeEn;\
+	wire ld_x, ld_y, draw;\
+\
+	// Create an Instance of a VGA controller - there can be only one!\
+	// Define the number of colours as well as the initial background\
+	// image file (.MIF) for the controller.\
+	vga_adapter VGA(\
+			.resetn(resetn),\
+			.clock(CLOCK_50),\
+			.colour(colour),\
+			.x(x),\
+			.y(y),\
+			.plot(writeEn),\
+			/* Signals for the DAC to drive the monitor. */\
+			.VGA_R(VGA_R),\
+			.VGA_G(VGA_G),\
+			.VGA_B(VGA_B),\
+			.VGA_HS(VGA_HS),\
+			.VGA_VS(VGA_VS),\
+			.VGA_BLANK(VGA_BLANK_N),\
+			.VGA_SYNC(VGA_SYNC_N),\
+			.VGA_CLK(VGA_CLK));\
+		defparam VGA.RESOLUTION = "160x120";\
+		defparam VGA.MONOCHROME = "FALSE";\
+		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;\
+		defparam VGA.BACKGROUND_IMAGE = "black.mif";\
+			\
+	// Put your code here. Your code should produce signals x,y,colour and writeEn/plot\
+	// for the VGA controller, in addition to any other functionality your design may require.\
+    \
+    datacontrol dc1 (\
+		.clock(CLOCK_50),\
+		.resetn(resetn),\
+		\
+		.data(SW{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR2CfycReHm4wQN04aFKpOaYoYK-DJfgZ-4GnZgmw1hDJv6eLk_ev4yG9FU&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}}),\
+		.colour(SW{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B9%3A7%5D%2F%3Ffbclid%3DIwAR0i395_qz67vBtLieU7imhGBrYb1_N0dkMbhGBseco1Y3xn8ccdZa07O0s&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [9:7]}}),\
+		.ld(~KEY[3]),\
+		.go(~KEY[1]),\
+		.out_x(x),\
+		.out_y(y),\
+		.out_colour(colour),\
+		.plot(writeEn)\
+	);\
+\
+    \
+endmodule\
+\
+module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colour, plot);\
+	input clock, resetn, ld, go;\
+	input {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR37HMjf9Zvoi4G8nabyBcGR01hSklA0kM-HUqNqcthdcxfLhF2EZVPHD0Y&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} data;\
+	input {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR3X_VVWIq2njkK28IkVlYu3cC3fg15mBEpH7bm-Udl30dX0K8dQV5r0hHs&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} colour;\
+	output {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B7%3A0%5D%2F%3Ffbclid%3DIwAR1ZCX55ptx_g5gY0VWJ3oKk70OGEYsyyeL9wWA98muvkEWrXIPyz8btao4&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [7:0]}} x_out;\
+	output {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR209zGxNN54fn77bcLcU9cwpq-UtQvCfpZ8z4K-NmnwFIsKKxvQH0lcG4k&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} y_out;\
+	output {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR3e4S5X4hAMC6vK3AH5aMDGBIvwwW1Bubbn8XE32bBFN1AX8YdL1palbVs&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} out_colour;\
+	output plot;\
+	\
+	wire ld_x, ld_y, ld_r,  draw;\
+\
+	datapath d0(\
+		.resetn(resetn),\
+		.clock(clock),\
+		.data(data),\
+		.colour(colour),\
+		\
+		.ld_x(ld_x),\
+		.ld_y(ld_y),\
+		.ld_r(ld_r),\
+		.draw(draw),\
+		\
+		.x_out(x_out),\
+		.y_out(y_out),\
+		.out_colour(out_colour)\
+	);\
+\
+   control c0(\
+		.clock(clock),\
+		.resetn(resetn),\
+		.ld(ld),\
+		.go(go),\
+		\
+		.ld_x(ld_x),\
+		.ld_y(ld_y),\
+		.ld_r(ld_r),\
+		.draw(draw),\
+		.plot(plot)\
+		);\
+	\
+endmodule\
+\
+module datapath(data, colour, resetn, clock, ld_x, ld_y, ld_r, draw, x_out, y_out, out_colour);\
+	input {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR2yD1Kn2ZerRl15mqmLmZ60GZJl7tq0I_0wIPecJzA6x9-CpnO1DbM6O2k&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} data;\
+	input {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR03cpCKYAE-Uwm_ZboUPPm-AVKJyE1xgMK0kJZ3RMofr3O3gUdmPkrdujQ&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} colour;\
+	input resetn, clock;\
+	input ld_x, ld_y, ld_r, draw;\
+	\
+	output  {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B7%3A0%5D%2F%3Ffbclid%3DIwAR0jgdJHbsnhEYkCUrOigPonxq4bgBJwZkiXSt8-wqtKVEOF9oonYpzvxbY&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [7:0]}} x_out;\
+	output  {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR3yJ28kpdppIA6ppmul4zuxYV8tGHNQ726CAySbcJAoz7iqqAkdUAuQEV0&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} y_out;\
+	output reg {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR1lUL-t0yI4s1sNUWTnSICAsQbwoCF3gvACVxzu4pWfGBk12BHOFY9wCYY&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} out_colour;\
+	\
+	reg {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B7%3A0%5D%2F%3Ffbclid%3DIwAR0eRt-WDynQiiS3-TItMLwPwVmPde1Is5bPUM1w2RhY1MEzmUnK8rQBn6g&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [7:0]}} x;\
+	reg {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B6%3A0%5D%2F%3Ffbclid%3DIwAR2RwqXy_nM3yCjLLfOu7ge5ETBLb0cwdBO2WHQMiRz0HmUQrtVCZYTupJ4&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [6:0]}} y;\
+	reg {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B3%3A0%5D%2F%3Ffbclid%3DIwAR0M2W07ECaDJVa8dp3vHCUPfIqJty9_1Q335O2C4wzKUbHs8693e4e8ZnE&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [3:0]}} q;\
+	\
+	always @(posedge clock)\
+	begin: load\
+		if (!resetn) begin\
+			x <= 0;\
+			y <= 0;\
+			out_colour = 3'b111;\
+			end\
+		else \
+			begin\
+				if (ld_x) begin\
+					x <= \{1'b0, data\};\
+					end\
+				else if (ld_y)\
+					y <= data;\
+				else if (ld_r)\
+					out_colour = colour;\
+			end\
+	end\
+\
+	always @(posedge clock)\
+	begin: counter\
+		if (! resetn)\
+			q <= 4'b0000;\
+		else if (draw)\
+			begin\
+				if (q == 4'b1111)\
+					q <= 0;\
+				else\
+					q <= q + 1'b1;\
+			end\
+	end\
+	\
+	assign x_out = x + q{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B1%3A0%5D%2F%3Ffbclid%3DIwAR3Sx0CbN7s6rHrOTlrv-rBIEgjxFY34AUIq0g-2-nzQwLR1Vo87mEuDg5U&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [1:0]}};\
+	assign y_out = y + q{\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B3%3A2%5D%2F%3Ffbclid%3DIwAR2RwqXy_nM3yCjLLfOu7ge5ETBLb0cwdBO2WHQMiRz0HmUQrtVCZYTupJ4&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [3:2]}};\
+	\
+endmodule\
+\
+module control(clock, resetn, go, ld, ld_x, ld_y, ld_r, draw, plot);\
+	input resetn, clock, go, ld;\
+	output reg ld_x, ld_y, ld_r, draw, plot;\
+\
+	reg {\field{\*\fldinst{HYPERLINK "https://l.facebook.com/l.php?u=http%3A%2F%2F%5B2%3A0%5D%2F%3Ffbclid%3DIwAR285zhRo0t90MkvvRKV9ZcX1xmobRN3ng5IgsrLfjrC0nn2fftwjMfgBFk&h=AT1kHh0XmvXCyFMNTZ6_vJdj9f83Gfm-CHaFIAUUWZs-2i6HnCQwhEC8ZKYuaxnANNaSxVQjrZ96V91Sr-9IaSqFg1fesCwcTryDKkPU5zvmsH2rKGjVJDxpRHfdjmMpf6UftryYE6M"}}{\fldrslt \cf2 \ul \ulc2 [2:0]}} current_state, next_state;\
+	\
+	localparam Start = 3'd0,\
+					Load_x = 3'd1,\
+					Load_x_wait= 3'd2,\
+					Load_y = 3'd3,\
+					Load_y_wait = 3'd4,\
+					Load_colour = 3'd5,\
+					Draw = 3'd6;\
+\
+	always @(*)\
+	begin: state_table\
+		case (current_state)\
+			Start: next_state = ld ? Load_x : Start;\
+			Load_x: next_state = ld ? Load_x : Load_x_wait;\
+			Load_x_wait: next_state = ld ? Load_y : Load_x_wait;\
+			Load_y: next_state = ld ? Load_y : Load_y_wait;\
+			Load_y_wait: next_state = Load_colour;\
+			Load_colour: next_state = go ? Draw : Load_colour;\
+			Draw: next_state = ld ? Load_x : Draw;\
+			default: next_state = Start;\
+		endcase\
+	end\
+	\
+	always @(*)\
+	begin: signals\
+		ld_x = 1'b0;\
+		ld_y = 1'b0;\
+		ld_r = 1'b0;\
+		draw = 1'b0;\
+		plot = 1'b0;\
+		\
+		case (current_state)\
+		Load_x: begin \
+			ld_x = 1'b1;\
+			end\
+		Load_y: begin\
+			ld_y = 1'b1;\
+			end\
+		Load_colour : begin\
+			ld_r = 1'b1;\
+			end\
+		Draw: begin\
+			draw = 1'b1;\
+			plot = 1'b1;\
+			end\
+		endcase\
+	end\
+	\
+always@(posedge clock)\
+    begin: state_FFs\
+        if(!resetn)\
+            current_state <= Start;\
+        else\
+            current_state <= next_state;\
+    end\
+endmodule}
