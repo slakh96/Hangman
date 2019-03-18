@@ -15,6 +15,7 @@ reg[27:0] period_val;
 //RESET is SW[9]
 
 always @(*)
+/*
 begin
 	case (SW[1:0])
 	2'b00:
@@ -35,7 +36,8 @@ begin
 		end
 	endcase
 end
-
+*/
+period_val <= 28'b10111110101111000010000000;
 hexdecoder h0(
 	.A(output_of_counter[3]),
 	.B(output_of_counter[2]),

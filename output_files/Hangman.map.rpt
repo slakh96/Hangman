@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Hangman
-Sun Mar 17 17:28:01 2019
+Mon Mar 18 18:03:15 2019
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -43,7 +43,7 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Mar 17 17:28:00 2019       ;
+; Analysis & Synthesis Status     ; Successful - Mon Mar 18 18:03:15 2019       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; Hangman                                     ;
 ; Top-level Entity Name           ; Hangman                                     ;
@@ -247,7 +247,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:04     ;
 +----------------+--------------+
 
 
@@ -257,16 +257,26 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Sun Mar 17 17:26:59 2019
+    Info: Processing started: Mon Mar 18 18:01:55 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Hangman -c Hangman
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 4 design units, including 4 entities, in source file hangman.v
     Info (12023): Found entity 1: Hangman File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 1
-    Info (12023): Found entity 2: control File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 11
-    Info (12023): Found entity 3: datapath File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 15
-    Info (12023): Found entity 4: hex_decoder File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 20
+    Info (12023): Found entity 2: control_letter File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 15
+    Info (12023): Found entity 3: datapath File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 125
+    Info (12023): Found entity 4: hex_decoder File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 130
 Info (12127): Elaborating entity "Hangman" for the top level hierarchy
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(8): object "letter1" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 8
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(9): object "letter2" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(10): object "letter3" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(11): object "letter4" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 11
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(12): object "letter5" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Warning (10230): Verilog HDL assignment warning at Hangman.v(8): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 8
+Warning (10230): Verilog HDL assignment warning at Hangman.v(9): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+Warning (10230): Verilog HDL assignment warning at Hangman.v(10): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+Warning (10230): Verilog HDL assignment warning at Hangman.v(11): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 11
+Warning (10230): Verilog HDL assignment warning at Hangman.v(12): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
 Warning (10034): Output port "HEX0" at Hangman.v(5) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 5
 Warning (10034): Output port "HEX1" at Hangman.v(5) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 5
 Warning (10034): Output port "HEX2" at Hangman.v(5) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 5
@@ -348,10 +358,10 @@ Warning (21074): Design contains 14 input pin(s) that do not drive logic
 Info (21057): Implemented 66 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 14 input pins
     Info (21059): Implemented 52 output pins
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 77 warnings
-    Info: Peak virtual memory: 4836 megabytes
-    Info: Processing ended: Sun Mar 17 17:28:01 2019
-    Info: Elapsed time: 00:01:02
-    Info: Total CPU time (on all processors): 00:01:38
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 87 warnings
+    Info: Peak virtual memory: 4831 megabytes
+    Info: Processing ended: Mon Mar 18 18:03:15 2019
+    Info: Elapsed time: 00:01:20
+    Info: Total CPU time (on all processors): 00:01:45
 
 

@@ -1,5 +1,5 @@
 Flow report for Hangman
-Sun Mar 17 17:31:38 2019
+Mon Mar 18 18:08:08 2019
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -41,7 +41,7 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Sun Mar 17 17:31:14 2019       ;
+; Flow Status                     ; Successful - Mon Mar 18 18:07:37 2019       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; Hangman                                     ;
 ; Top-level Entity Name           ; Hangman                                     ;
@@ -68,7 +68,7 @@ agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 03/17/2019 17:27:04 ;
+; Start date & time ; 03/18/2019 18:01:57 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; Hangman             ;
 +-------------------+---------------------+
@@ -79,7 +79,7 @@ agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 1097762281802.155285802307464          ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 1097762281802.155294651610404          ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
 ; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
@@ -94,11 +94,11 @@ agreement for further details.
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:57     ; 1.0                     ; 4804 MB             ; 00:01:37                           ;
-; Fitter                    ; 00:02:31     ; 1.0                     ; 6573 MB             ; 00:03:08                           ;
-; Assembler                 ; 00:00:28     ; 1.0                     ; 4855 MB             ; 00:00:24                           ;
-; TimeQuest Timing Analyzer ; 00:00:21     ; 1.0                     ; 5119 MB             ; 00:00:18                           ;
-; Total                     ; 00:04:17     ; --                      ; --                  ; 00:05:27                           ;
+; Analysis & Synthesis      ; 00:01:15     ; 1.0                     ; 4799 MB             ; 00:01:44                           ;
+; Fitter                    ; 00:03:14     ; 1.0                     ; 6561 MB             ; 00:03:18                           ;
+; Assembler                 ; 00:00:38     ; 1.0                     ; 4858 MB             ; 00:00:26                           ;
+; TimeQuest Timing Analyzer ; 00:00:25     ; 1.0                     ; 5119 MB             ; 00:00:19                           ;
+; Total                     ; 00:05:32     ; --                      ; --                  ; 00:05:47                           ;
 +---------------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
