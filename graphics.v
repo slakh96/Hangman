@@ -6,6 +6,7 @@ module graphics
 		// Your inputs and outputs here
         KEY,
         SW,
+		  correct,
 		// The ports below are for the VGA output.  Do not change.
 		VGA_CLK,   						//	VGA Clock
 		VGA_HS,							//	VGA H_SYNC
@@ -20,6 +21,7 @@ module graphics
 	input			CLOCK_50;				//	50 MHz
 	input   [9:0]   SW;
 	input   [3:0]   KEY;
+	input correct;
 
 	// Declare your inputs and outputs here
 	// Do not change the following outputs
@@ -41,6 +43,7 @@ module graphics
 	wire [6:0] y;
 	wire writeEn;
 	wire ld_x, ld_y, draw;
+	
 
 	// Create an Instance of a VGA controller - there can be only one!
 	// Define the number of colours as well as the initial background
@@ -80,13 +83,14 @@ module graphics
 		.out_x(x),
 		.out_y(y),
 		.out_colour(colour),
-		.plot(writeEn)
+		.plot(writeEn),
+		.correct(correct)
 	);
 
     
 endmodule
 
-module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colour, plot);
+module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colour, plot, correct);
 	input clock, resetn, ld, go;
 	input [6:0] data;
 	input [2:0] colour;
@@ -94,6 +98,7 @@ module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colou
 	output [6:0] y_out;
 	output [2:0] out_colour;
 	output plot;
+	input correct;
 	
 	wire ld_x, ld_y, ld_r,  draw;
 
@@ -111,6 +116,7 @@ module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colou
 		.x_out(x_out),
 		.y_out(y_out),
 		.out_colour(out_colour)
+		.correct(correct);
 	);
 
    control c0(
@@ -128,11 +134,12 @@ module datacontrol (clock, resetn, data, colour, ld, go, x_out, y_out, out_colou
 	
 endmodule
 
-module datapath(data, colour, resetn, clock, ld_x, ld_y, ld_r, draw, x_out, y_out, out_colour);
+module datapath(data, colour, resetn, clock, ld_x, ld_y, ld_r, draw, x_out, y_out, out_colour, correct);
 	input [6:0] data;
 	input [2:0] colour;
 	input resetn, clock;
 	input ld_x, ld_y, ld_r, draw;
+	input correct;
 	
 	output  [7:0] x_out;
 	output  [6:0] y_out;
@@ -151,13 +158,16 @@ module datapath(data, colour, resetn, clock, ld_x, ld_y, ld_r, draw, x_out, y_ou
 			end
 		else 
 			begin
-				if (ld_x) begin
-					x <= {1'b0, data};
-					end
-				else if (ld_y)
-					y <= data;
-				else if (ld_r)
-					out_colour = colour;
+				x <= 7'b0101010 + data; // Sample x position, changes where to draw based on which letter the user guessed right
+				y <= 7'b0101010; // Sample y position, we have to fix this in the lab
+				out_colour = 3'b000; //Random colour for testing purposes
+				//if (ld_x) begin
+					//x <= {1'b0, data};
+					//end
+				//else if (ld_y)
+					//y <= data;
+				//else if (ld_r)
+					//out_colour = colour;
 			end
 	end
 
