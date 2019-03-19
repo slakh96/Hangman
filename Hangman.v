@@ -2,9 +2,10 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 		
 		//TODO: Hangman drawing stuff
 		//TODO: Letter, hangman, and background images
-		//TODO: Scoreboard
 		//TODO: What happens when the game is over
+		//TODO: Scoreboard
 		//TODO: How to un-draw stuff?
+		//TODO: TESTING :(
 		
 		input [9:0] SW;
 		input [3:0] KEY;
