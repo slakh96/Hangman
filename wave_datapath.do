@@ -15,3 +15,31 @@ vsim datapath
 log {/*}
 # add wave {/*} would add all items in top level simulation module.
 add wave {/*}
+
+force {clk} 0 0, 1 5 -r 10
+force {resetn} 0 0, 1 10
+
+force {enable_l1} 1
+force {enable_l2} 0
+force {enable_l3} 1
+force {enable_l4} 0
+force {enable_l5} 0
+
+force {enable_l1} 1
+force {enable_l2} 1
+force {enable_l3} 1
+force {enable_l4} 0
+force {enable_l5} 0
+
+force {enable_l1} 0
+force {enable_l2} 0
+force {enable_l3} 0
+force {enable_l4} 0
+force {enable_l5} 0
+
+force {enable_l1} 1
+force {enable_l2} 1
+force {enable_l3} 1
+force {enable_l4} 1
+force {enable_l5} 1
+run 300ns
