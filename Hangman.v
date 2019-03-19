@@ -120,7 +120,53 @@ module control_letter(input guess, input clk, input resetn, input go, input lett
 
 endmodule
 
-module datapath();
+module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_l5,
+					draw_hangman, unmask_letters);
+	input clk, resetn;
+	input enable_l1, enable_l2, enable_l3, enable_l4, enable_l5;
+	output [5:0] draw_hangman;
+	output [5:0] unmask_letters;
+	
+	reg num_corrects;
+	reg [5:0] increment;
+	reg [5:0] letter_display;
+	
+	always @(posedge clk)
+	begin: counter
+		if (!resetn)
+			num_corrects <= 0;
+			increment <= 0;
+			letter_display <= 0;
+		else
+			if (num_corrects == 5'b1111)
+				begin
+				num_corrects <= 0;
+				increment <= 0;
+				end
+			else if (enable_l1 || enable_l2 || enable_l3 || enable_l4 || enable_l5)
+				begin
+				num_corrects <= num_corrects + 1'b1;
+				if (enable_l1)
+					letter_display <= 1;
+				if (enable_l2)
+					letter_display <= 2;
+				if (enable_l3)
+					letter_display <= 3;
+				if (enable_l4)
+					letter_display <= 4;
+				if (enable_l5)
+					letter_display <= 5;
+				end
+			else 
+				increment <= increment + 1'b1;
+	end
+	
+	assign draw_hangman = increment;
+	assign unmask_letters = letter_display;
+				
+				
+
+endmodule
 
 endmodule
 
