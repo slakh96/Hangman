@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at graphics.v(145): always construct contains both blocking and non-blocking assignments File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/graphics.v Line: 145
+Warning (10268): Verilog HDL information at Hangman.v(203): always construct contains both blocking and non-blocking assignments File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 203

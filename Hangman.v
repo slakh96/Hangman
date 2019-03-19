@@ -1,5 +1,11 @@
 module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 		
+		//TODO: Hangman drawing stuff
+		//TODO: Letter, hangman, and background images
+		//TODO: Scoreboard
+		//TODO: What happens when the game is over
+		//TODO: How to un-draw stuff?
+		
 		input [9:0] SW;
 		input [3:0] KEY;
 		input CLOCK_50;
@@ -11,7 +17,7 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 		reg letter3 = 5'b00000;//A
 		reg letter4 = 5'b11000;//Y
 		reg letter5 = 5'b11111;//Dummy value which is not any of the letters, since this is a 4 letter word
-		wire enable_l1, enable_l2, enable_l3, enable_l4, enable_l5, enable_mask_remove, draw_hangman, unmask_letters;
+		wire enable_l1, enable_l2, enable_l3, enable_l4, enable_l5, enable_mask_remove, draw_hangman, unmask_letters, game_won;
 		control_letter c1(
 			.guess(SW[4:0]),
 			.clk(CLOCK_50),
@@ -38,7 +44,8 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 			.enable_l4(enable_l4),
 			.enable_l5(enable_l5),
 			.draw_hangman(draw_hangman),//Equal to the number of times the user has guessed wrong.
-			.unmask_letters(unmask_letters)//Equal to the particular letter to un-mask
+			.unmask_letters(unmask_letters),//Equal to the particular letter to un-mask
+			.game_won(game_won)
 		);
 		
 		vga_adapter VGA(
@@ -61,6 +68,16 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 1;
 		defparam VGA.BACKGROUND_IMAGE = "black.mif";
+		wire game_over;
+		assign game_over = game_won || draw_hangman == 6; //Game is over when user guesses too many wrong (e.g. 6 wrong) or wins
+		rate_divider r1(
+			.resetn(SW[9]),
+			.HEX0(HEX0),
+			.CLOCK_50(CLOCK_50),
+			.LEDR(LEDR[9:0]),
+			.enable(~game_over) //if the game is not over and the timer should continue
+		);
+		
 endmodule
 
 module control_letter(input [4:0] guess, input clk, input resetn, input go, input[4:0] letter1, input[4:0] letter2, input[4:0] letter3, 
@@ -172,11 +189,12 @@ module control_letter(input [4:0] guess, input clk, input resetn, input go, inpu
 endmodule
 
 module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_l5,
-					draw_hangman, unmask_letters);
+					draw_hangman, unmask_letters, game_won);
 	input clk, resetn;
 	input enable_l1, enable_l2, enable_l3, enable_l4, enable_l5;
 	output [5:0] draw_hangman;
 	output [5:0] unmask_letters;
+	output reg game_won;
 	
 	reg num_corrects;
 	reg [5:0] increment;
@@ -213,12 +231,15 @@ module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_
 				end
 			else 
 				increment <= increment + 1'b1;
+			if (num_corrects < 4)
+				game_won <= 1'b0;
+			else
+				game_won <= 1'b1;
 		end
 	end
 	
 	assign draw_hangman = increment;
 	assign unmask_letters = letter_display;
-				
 
 endmodule
 

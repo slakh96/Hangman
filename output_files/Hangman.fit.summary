@@ -1,12 +1,12 @@
-Fitter Status : Successful - Tue Mar 19 10:28:40 2019
+Fitter Status : Successful - Tue Mar 19 12:43:45 2019
 Quartus Prime Version : 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 Revision Name : Hangman
 Top-level Entity Name : Hangman
 Family : Cyclone V
 Device : 5CSEMA5F31C6
 Timing Models : Final
-Logic utilization (in ALMs) : 1 / 32,070 ( < 1 % )
-Total registers : 0
+Logic utilization (in ALMs) : 27 / 32,070 ( < 1 % )
+Total registers : 33
 Total pins : 67 / 457 ( 15 % )
 Total virtual pins : 0
 Total block memory bits : 0 / 4,065,280 ( 0 % )

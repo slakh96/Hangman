@@ -1,43 +1,17 @@
-module rate_divider(SW, LEDR, HEX0, KEY, CLOCK_50);
-input[9:0] SW;
-input[1:0] KEY;
+module rate_divider(resetn, LEDR, HEX0, CLOCK_50, enable);
+input resetn;
 input CLOCK_50;
+input enable;
 output[6:0] HEX0;
 output[9:0] LEDR;
 wire [27:0] delay_value;
 wire [3:0]output_of_counter;
 wire toggle_enable_for_hex_counter;
-reg[27:0] period_val;
+wire[27:0] period_val;
 //1011111010111100001000000000 is 200 000 000
 //101111101011110000100000000 is 100 000 000
 //10111110101111000010000000 is 50 000 000
-
-//RESET is SW[9]
-
-always @(*)
-/*
-begin
-	case (SW[1:0])
-	2'b00:
-		begin //assigns period to 1
-			period_val <= 28'b0000000000000000000000000001; 
-		end
-	2'b01:
-		begin //assigns period to 2
-			period_val <= 28'b0000000000000000000000000010;
-		end
-	2'b10:
-		begin //assigns period to 3
-			period_val <= 28'b0000000000000000000000000011;
-		end
-	2'b11:
-		begin //assigns period to 4
-			period_val <= 28'b0000000000000000000000000100;
-		end
-	endcase
-end
-*/
-period_val <= 28'b10111110101111000010000000;
+assign period_val = 28'b10111110101111000010000000;//one second
 hexdecoder h0(
 	.A(output_of_counter[3]),
 	.B(output_of_counter[2]),
@@ -53,20 +27,22 @@ hexdecoder h0(
 );
 
 RateDelay r1(
-	.d(period_val),//value of the period
-	.clock(KEY[0]),
-	.reset_n(SW[9]),
-	.q(delay_value),
+	.d(period_val),//value of the period, which is one second
+	.clock(CLOCK_50),
+	.reset_n(resetn),
+	.q(delay_value),//Not really used, since I used the toggle_enable to see when to increment
 	.toggle_enable_for_hex_counter(toggle_enable_for_hex_counter)
 	
 );
 
 counter_to_hex c1(
-	.d(4'b0000),
-	.clock(KEY[0]),
-	.reset_n(SW[9]),
-	.par_load(1'b0),
-	.enable(toggle_enable_for_hex_counter),
+	.d(4'b0000),//What we should load
+	.clock(CLOCK_50),
+	.reset_n(resetn),
+	.par_load(1'b0),//If we should load a new value or not...eventually need to turn this to 1 whenever a new round starts
+	.second_passed(toggle_enable_for_hex_counter),//Rate delay enables this every 1 second
+	.time_limit(4'b1111), //Hangman's time limit...rn it is 16 seconds
+	.enable(1'b1),//To enable this counter, e.g. when the game started being played
 	.q(output_of_counter)
 );
 assign LEDR[3:0] = output_of_counter[3:0];
@@ -77,12 +53,14 @@ assign LEDR[9] = toggle_enable_for_hex_counter;
 endmodule
 
 
-module counter_to_hex(d, clock, reset_n, par_load, enable, q);
+module counter_to_hex(d, clock, reset_n, par_load, enable, time_limit, second_passed, q);
 	input[3:0] d;//what to assign the counter to,, if par_load is high
 	input clock;//timekeeping
 	input reset_n;//to determine if we should reset q
 	input par_load;//to determine whether we should load a new value or not
-	input enable;//to enable this counter to increase
+	input second_passed;//to enable this counter to increase
+	input time_limit;
+	input enable;
 	//1011111010111100001000000000 is 200 000 000
 	//101111101011110000100000000 is 100 000 000
 	//10111110101111000010000000 is 50 000 000
@@ -92,17 +70,17 @@ module counter_to_hex(d, clock, reset_n, par_load, enable, q);
 	begin
 	//q <= 4'b0000;
 	if (reset_n == 1'b0)
-				q <= 4'b0000;
+				q <= time_limit;
 	else if (enable == 1'b1)
 		begin
 			if (par_load == 1'b1)
 				q <= d;
-			else if (enable == 1'b1)
+			else if (second_passed == 1'b1)
 				begin
-					if (q == 4'b1111)
-						q <= 4'b0000;
+					if (q == 4'b0000)
+						q <= time_limit;
 					else
-						q <= q + 4'b0001;
+						q <= q - 4'b0001;
 				end
 		end
 	end

@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Hangman
-Tue Mar 19 10:24:11 2019
+Tue Mar 19 12:41:25 2019
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -15,21 +15,24 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Registers Removed During Synthesis
   9. General Register Statistics
- 10. Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_m6m1:auto_generated
- 11. Parameter Settings for User Entity Instance: vga_adapter:VGA
- 12. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_address_translator:user_input_translator
- 13. Parameter Settings for User Entity Instance: vga_adapter:VGA|altsyncram:VideoMemory
- 14. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component
- 15. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_controller:controller
- 16. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_controller:controller|vga_address_translator:controller_translator
- 17. altsyncram Parameter Settings by Entity Instance
- 18. altpll Parameter Settings by Entity Instance
- 19. Port Connectivity Checks: "vga_adapter:VGA"
- 20. Port Connectivity Checks: "datapath:d0"
- 21. Port Connectivity Checks: "control_letter:c1"
- 22. Post-Synthesis Netlist Statistics for Top Partition
- 23. Elapsed Time Per Partition
- 24. Analysis & Synthesis Messages
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_m6m1:auto_generated
+ 12. Parameter Settings for User Entity Instance: vga_adapter:VGA
+ 13. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_address_translator:user_input_translator
+ 14. Parameter Settings for User Entity Instance: vga_adapter:VGA|altsyncram:VideoMemory
+ 15. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component
+ 16. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_controller:controller
+ 17. Parameter Settings for User Entity Instance: vga_adapter:VGA|vga_controller:controller|vga_address_translator:controller_translator
+ 18. altsyncram Parameter Settings by Entity Instance
+ 19. altpll Parameter Settings by Entity Instance
+ 20. Port Connectivity Checks: "rate_divider:r1|counter_to_hex:c1"
+ 21. Port Connectivity Checks: "rate_divider:r1|RateDelay:r1"
+ 22. Port Connectivity Checks: "vga_adapter:VGA"
+ 23. Port Connectivity Checks: "datapath:d0"
+ 24. Port Connectivity Checks: "control_letter:c1"
+ 25. Post-Synthesis Netlist Statistics for Top Partition
+ 26. Elapsed Time Per Partition
+ 27. Analysis & Synthesis Messages
 
 
 
@@ -56,13 +59,13 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Mar 19 10:24:10 2019       ;
+; Analysis & Synthesis Status     ; Successful - Tue Mar 19 12:41:24 2019       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; Hangman                                     ;
 ; Top-level Entity Name           ; Hangman                                     ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 0                                           ;
+; Total registers                 ; 33                                          ;
 ; Total pins                      ; 67                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
@@ -172,10 +175,11 @@ agreement for further details.
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 1           ;
+; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
+;     Processors 2-4         ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -208,43 +212,48 @@ agreement for further details.
 ; cycloneii_pll.inc                ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/cycloneii_pll.inc     ;         ;
 ; db/altpll_80u.tdf                ; yes             ; Auto-Generated Megafunction            ; C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/db/altpll_80u.tdf           ;         ;
 ; vga_controller.v                 ; yes             ; Auto-Found Verilog HDL File            ; C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_controller.v            ;         ;
+; rate_divider.v                   ; yes             ; Auto-Found Verilog HDL File            ; C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v              ;         ;
 +----------------------------------+-----------------+----------------------------------------+------------------------------------------------------------------------------+---------+
 
 
-+-----------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary         ;
-+---------------------------------------------+-------+
-; Resource                                    ; Usage ;
-+---------------------------------------------+-------+
-; Estimate of Logic utilization (ALMs needed) ; 0     ;
-;                                             ;       ;
-; Combinational ALUT usage for logic          ; 0     ;
-;     -- 7 input functions                    ; 0     ;
-;     -- 6 input functions                    ; 0     ;
-;     -- 5 input functions                    ; 0     ;
-;     -- 4 input functions                    ; 0     ;
-;     -- <=3 input functions                  ; 0     ;
-;                                             ;       ;
-; Dedicated logic registers                   ; 0     ;
-;                                             ;       ;
-; I/O pins                                    ; 67    ;
-;                                             ;       ;
-; Total DSP Blocks                            ; 0     ;
-;                                             ;       ;
-; Maximum fan-out node                        ; SW[0] ;
-; Maximum fan-out                             ; 1     ;
-; Total fan-out                               ; 67    ;
-; Average fan-out                             ; 0.50  ;
-+---------------------------------------------+-------+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimate of Logic utilization (ALMs needed) ; 27             ;
+;                                             ;                ;
+; Combinational ALUT usage for logic          ; 47             ;
+;     -- 7 input functions                    ; 0              ;
+;     -- 6 input functions                    ; 6              ;
+;     -- 5 input functions                    ; 3              ;
+;     -- 4 input functions                    ; 8              ;
+;     -- <=3 input functions                  ; 30             ;
+;                                             ;                ;
+; Dedicated logic registers                   ; 33             ;
+;                                             ;                ;
+; I/O pins                                    ; 67             ;
+;                                             ;                ;
+; Total DSP Blocks                            ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 33             ;
+; Total fan-out                               ; 319            ;
+; Average fan-out                             ; 1.49           ;
++---------------------------------------------+----------------+
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                    ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |Hangman                   ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 67   ; 0            ; |Hangman            ; Hangman     ; work         ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                              ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------+----------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                        ; Entity Name    ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------+----------------+--------------+
+; |Hangman                   ; 47 (0)              ; 33 (0)                    ; 0                 ; 0          ; 67   ; 0            ; |Hangman                                   ; Hangman        ; work         ;
+;    |rate_divider:r1|       ; 47 (0)              ; 33 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |Hangman|rate_divider:r1                   ; rate_divider   ; work         ;
+;       |RateDelay:r1|       ; 35 (35)             ; 29 (29)                   ; 0                 ; 0          ; 0    ; 0            ; |Hangman|rate_divider:r1|RateDelay:r1      ; RateDelay      ; work         ;
+;       |counter_to_hex:c1|  ; 5 (5)               ; 4 (4)                     ; 0                 ; 0          ; 0    ; 0            ; |Hangman|rate_divider:r1|counter_to_hex:c1 ; counter_to_hex ; work         ;
+;       |hexdecoder:h0|      ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Hangman|rate_divider:r1|hexdecoder:h0     ; hexdecoder     ; work         ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+--------------------------------------------+----------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
@@ -265,14 +274,24 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 0     ;
-; Number of registers using Synchronous Clear  ; 0     ;
+; Total registers                              ; 33    ;
+; Number of registers using Synchronous Clear  ; 28    ;
 ; Number of registers using Synchronous Load   ; 0     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Clock Enable       ; 3     ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
+; 3:1                ; 28 bits   ; 56 LEs        ; 0 LEs                ; 56 LEs                 ; Yes        ; |Hangman|rate_divider:r1|RateDelay:r1|q[16]     ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |Hangman|rate_divider:r1|counter_to_hex:c1|q[1] ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------+
@@ -809,6 +828,39 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------+-------------------------------------------------------+
 
 
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "rate_divider:r1|counter_to_hex:c1"                                                                                                                                                        ;
++----------------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port           ; Type  ; Severity ; Details                                                                                                                                                                          ;
++----------------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; d              ; Input ; Info     ; Stuck at GND                                                                                                                                                                     ;
+; par_load       ; Input ; Info     ; Stuck at GND                                                                                                                                                                     ;
+; time_limit     ; Input ; Warning  ; Input port expression (4 bits) is wider than the input port (1 bits) it drives.  The 3 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; time_limit[-1] ; Input ; Info     ; Stuck at VCC                                                                                                                                                                     ;
+; enable         ; Input ; Info     ; Stuck at VCC                                                                                                                                                                     ;
++----------------+-------+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "rate_divider:r1|RateDelay:r1"                                                            ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port      ; Type   ; Severity ; Details                                                                             ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+; d[23..19] ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; d[15..12] ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; d[27..26] ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[11..8]  ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[6..0]   ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[25]     ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; d[24]     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[18]     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[17]     ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; d[16]     ; Input  ; Info     ; Stuck at GND                                                                        ;
+; d[7]      ; Input  ; Info     ; Stuck at VCC                                                                        ;
+; q         ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Port Connectivity Checks: "vga_adapter:VGA"                                                                                                                                                                        ;
 +-----------+--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -869,13 +921,24 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_lcell_comb     ; 1                           ;
-;     normal            ; 1                           ;
+; arriav_ff             ; 33                          ;
+;     ENA               ; 3                           ;
+;     SCLR              ; 28                          ;
+;     plain             ; 2                           ;
+; arriav_lcell_comb     ; 48                          ;
+;     arith             ; 28                          ;
+;         1 data inputs ; 28                          ;
+;     normal            ; 20                          ;
 ;         0 data inputs ; 1                           ;
+;         2 data inputs ; 1                           ;
+;         3 data inputs ; 1                           ;
+;         4 data inputs ; 8                           ;
+;         5 data inputs ; 3                           ;
+;         6 data inputs ; 6                           ;
 ; boundary_port         ; 67                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 0.00                        ;
-; Average LUT depth     ; 0.00                        ;
+; Max LUT depth         ; 3.70                        ;
+; Average LUT depth     ; 2.45                        ;
 +-----------------------+-----------------------------+
 
 
@@ -884,7 +947,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:02     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -894,48 +957,47 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Tue Mar 19 10:22:44 2019
+    Info: Processing started: Tue Mar 19 12:40:22 2019
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Hangman -c Hangman
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 4 design units, including 4 entities, in source file hangman.v
     Info (12023): Found entity 1: Hangman File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 1
-    Info (12023): Found entity 2: control_letter File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 66
-    Info (12023): Found entity 3: datapath File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 174
-    Info (12023): Found entity 4: hex_decoder File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 226
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(49): created implicit net for "y" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 49
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(52): created implicit net for "VGA_R" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 52
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(53): created implicit net for "VGA_G" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 53
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(54): created implicit net for "VGA_B" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 54
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(55): created implicit net for "VGA_HS" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 55
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(56): created implicit net for "VGA_VS" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 56
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(57): created implicit net for "VGA_BLANK_N" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 57
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(58): created implicit net for "VGA_SYNC_N" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 58
-Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(59): created implicit net for "VGA_CLK" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 59
+    Info (12023): Found entity 2: control_letter File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 83
+    Info (12023): Found entity 3: datapath File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 191
+    Info (12023): Found entity 4: hex_decoder File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 247
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(56): created implicit net for "y" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 56
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(59): created implicit net for "VGA_R" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 59
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(60): created implicit net for "VGA_G" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 60
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(61): created implicit net for "VGA_B" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 61
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(62): created implicit net for "VGA_HS" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 62
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(63): created implicit net for "VGA_VS" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 63
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(64): created implicit net for "VGA_BLANK_N" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 64
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(65): created implicit net for "VGA_SYNC_N" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 65
+Warning (10236): Verilog HDL Implicit Net warning at Hangman.v(66): created implicit net for "VGA_CLK" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 66
 Info (12127): Elaborating entity "Hangman" for the top level hierarchy
-Warning (10230): Verilog HDL assignment warning at Hangman.v(9): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
-Warning (10230): Verilog HDL assignment warning at Hangman.v(10): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
-Warning (10230): Verilog HDL assignment warning at Hangman.v(11): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 11
-Warning (10230): Verilog HDL assignment warning at Hangman.v(12): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
-Warning (10230): Verilog HDL assignment warning at Hangman.v(13): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
-Warning (10034): Output port "HEX0" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "HEX1" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "HEX2" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "HEX3" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "HEX4" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "HEX5" at Hangman.v(6) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-Warning (10034): Output port "LEDR" at Hangman.v(7) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-Info (12128): Elaborating entity "control_letter" for hierarchy "control_letter:c1" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 31
-Warning (10858): Verilog HDL warning at Hangman.v(71): object current_state used but never assigned File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Warning (10036): Verilog HDL or VHDL warning at Hangman.v(71): object "next_state" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Warning (10030): Net "current_state.S_INCORRECT" at Hangman.v(71) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Warning (10030): Net "current_state.S_INCORRECT_WAIT" at Hangman.v(71) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Warning (10030): Net "current_state.S_CORRECT" at Hangman.v(71) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Warning (10030): Net "current_state.S_CORRECT_WAIT" at Hangman.v(71) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
-Info (12128): Elaborating entity "datapath" for hierarchy "datapath:d0" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 42
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(71): object "game_over" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 71
+Warning (10230): Verilog HDL assignment warning at Hangman.v(15): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 15
+Warning (10230): Verilog HDL assignment warning at Hangman.v(16): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 16
+Warning (10230): Verilog HDL assignment warning at Hangman.v(17): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 17
+Warning (10230): Verilog HDL assignment warning at Hangman.v(18): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 18
+Warning (10230): Verilog HDL assignment warning at Hangman.v(19): truncated value with size 5 to match size of target (1) File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 19
+Warning (10034): Output port "HEX1" at Hangman.v(12) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Warning (10034): Output port "HEX2" at Hangman.v(12) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Warning (10034): Output port "HEX3" at Hangman.v(12) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Warning (10034): Output port "HEX4" at Hangman.v(12) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Warning (10034): Output port "HEX5" at Hangman.v(12) has no driver File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+Info (12128): Elaborating entity "control_letter" for hierarchy "control_letter:c1" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 37
+Warning (10858): Verilog HDL warning at Hangman.v(88): object current_state used but never assigned File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Warning (10036): Verilog HDL or VHDL warning at Hangman.v(88): object "next_state" assigned a value but never read File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Warning (10030): Net "current_state.S_INCORRECT" at Hangman.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Warning (10030): Net "current_state.S_INCORRECT_WAIT" at Hangman.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Warning (10030): Net "current_state.S_CORRECT" at Hangman.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Warning (10030): Net "current_state.S_CORRECT_WAIT" at Hangman.v(88) has no driver or initial value, using a default initial value '0' File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 88
+Info (12128): Elaborating entity "datapath" for hierarchy "datapath:d0" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 49
 Warning (12125): Using design file vga_adapter.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: vga_adapter File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_adapter.v Line: 78
-Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 59
+Info (12128): Elaborating entity "vga_adapter" for hierarchy "vga_adapter:VGA" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 66
 Warning (12125): Using design file vga_address_translator.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: vga_address_translator File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_address_translator.v Line: 4
 Info (12128): Elaborating entity "vga_address_translator" for hierarchy "vga_adapter:VGA|vga_address_translator:user_input_translator" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_adapter.v Line: 192
@@ -992,6 +1054,15 @@ Info (12128): Elaborating entity "altpll_80u" for hierarchy "vga_adapter:VGA|vga
 Warning (12125): Using design file vga_controller.v, which is not specified as a design file for the current project, but contains definitions for 1 design units and 1 entities in project
     Info (12023): Found entity 1: vga_controller File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_controller.v Line: 9
 Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_adapter:VGA|vga_controller:controller" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/vga_adapter.v Line: 252
+Warning (12125): Using design file rate_divider.v, which is not specified as a design file for the current project, but contains definitions for 4 design units and 4 entities in project
+    Info (12023): Found entity 1: rate_divider File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 1
+    Info (12023): Found entity 2: counter_to_hex File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 56
+    Info (12023): Found entity 3: RateDelay File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 90
+    Info (12023): Found entity 4: hexdecoder File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 124
+Info (12128): Elaborating entity "rate_divider" for hierarchy "rate_divider:r1" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 79
+Info (12128): Elaborating entity "hexdecoder" for hierarchy "rate_divider:r1|hexdecoder:h0" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 27
+Info (12128): Elaborating entity "RateDelay" for hierarchy "rate_divider:r1|RateDelay:r1" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 36
+Info (12128): Elaborating entity "counter_to_hex" for hierarchy "rate_divider:r1|counter_to_hex:c1" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/rate_divider.v Line: 47
 Warning (14284): Synthesized away the following node(s):
     Warning (14285): Synthesized away the following RAM node(s):
         Warning (14320): Synthesized away node "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_m6m1:auto_generated|ram_block1a0" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/db/altsyncram_m6m1.tdf Line: 51
@@ -1006,86 +1077,74 @@ Warning (14284): Synthesized away the following node(s):
 Warning (14284): Synthesized away the following node(s):
     Warning (14285): Synthesized away the following PLL node(s):
         Warning (14320): Synthesized away node "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component|altpll_80u:auto_generated|clk[0]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/db/altpll_80u.tdf Line: 34
-Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (12241): 3 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "HEX0[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX0[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX4[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "HEX5[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 6
-    Warning (13410): Pin "LEDR[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
-    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 7
+    Warning (13410): Pin "HEX1[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX1[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX2[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX3[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX4[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[0]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[1]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[2]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[3]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "HEX5[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 12
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 13
+Info (286030): Timing-Driven Synthesis is running
 Info (17049): 21 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 15 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[9]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 3
-    Warning (15610): No output dependent on input pin "KEY[0]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[2]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 4
-    Warning (15610): No output dependent on input pin "KEY[3]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 4
-    Warning (15610): No output dependent on input pin "CLOCK_50" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 5
-Info (21057): Implemented 67 device resources after synthesis - the final resource count might be different
+Warning (21074): Design contains 13 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "SW[0]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[1]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[2]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[3]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[4]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[5]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[6]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[7]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "SW[8]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 9
+    Warning (15610): No output dependent on input pin "KEY[0]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+    Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+    Warning (15610): No output dependent on input pin "KEY[2]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+    Warning (15610): No output dependent on input pin "KEY[3]" File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 10
+Info (21057): Implemented 114 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 15 input pins
     Info (21059): Implemented 52 output pins
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 116 warnings
-    Info: Peak virtual memory: 4844 megabytes
-    Info: Processing ended: Tue Mar 19 10:24:11 2019
-    Info: Elapsed time: 00:01:27
-    Info: Total CPU time (on all processors): 00:01:43
+    Info (21061): Implemented 47 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 102 warnings
+    Info: Peak virtual memory: 4873 megabytes
+    Info: Processing ended: Tue Mar 19 12:41:25 2019
+    Info: Elapsed time: 00:01:03
+    Info: Total CPU time (on all processors): 00:01:40
 
 
