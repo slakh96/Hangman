@@ -164,9 +164,6 @@ module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_
 	assign draw_hangman = increment;
 	assign unmask_letters = letter_display;
 				
-				
-
-endmodule
 
 endmodule
 
