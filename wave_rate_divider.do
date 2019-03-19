@@ -17,3 +17,9 @@ log {/*}
 add wave {/*}
 
 #Note: Can model the tests after the ratedivider lab's tests
+
+force {clock} 0 0, 1 1 -r 2
+force {reset_n} 0 0, 1 2
+force {toggle_enable_for_hex_counter} 1
+force {d[27:0]} 10111110101111000010000000
+run 200ns
