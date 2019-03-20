@@ -7,6 +7,11 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 		//TODO: How to un-draw stuff?
 		//TODO: TESTING :(
 		
+		
+		//Ask about unmasking a letter if we have a binary representation of where it is
+		//Ask how to unmask multiple letters together
+		//Ask about images,,, how to put them into Verilog
+		
 		input [9:0] SW;
 		input [3:0] KEY;
 		input CLOCK_50;
@@ -45,7 +50,6 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 			.enable_l4(enable_l4),
 			.enable_l5(enable_l5),
 			.draw_hangman(draw_hangman),//Equal to the number of times the user has guessed wrong.
-			.unmask_letters(unmask_letters),//Equal to the particular letter to un-mask
 			.game_won(game_won)
 		);
 		
@@ -53,7 +57,7 @@ module Hangman(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, KEY, LEDR, CLOCK_50);
 			.resetn(SW[9]),
 			.clock(CLOCK_50),
 			.colour(3'b010), //Just give a random colour for now
-			.x(7'b101010 + 5 * unmask_letters), //offsetting it by the letter to draw
+			.x(7'b101010), //offsetting it by the letter to draw
 			.y(y),
 			.plot(enable_mask_remove),
 			/* Signals for the DAC to drive the monitor. */
@@ -144,7 +148,7 @@ module control_letter(input [4:0] guess, input clk, input resetn, input go, inpu
 					 S_CORRECT: next_state = go ? S_CORRECT_WAIT : S_CORRECT; // Loop in current state until value is input
                 S_CORRECT_WAIT: begin//next_state = go ? S_INCORRECT_WAIT : begin // Loop in current state until go signal goes low
 								if (go) 
-									next_state = S_INCORRECT_WAIT;
+									next_state = S_CORRECT_WAIT;
 								else
 									begin
 									if(guess == letter1)
@@ -186,20 +190,25 @@ module control_letter(input [4:0] guess, input clk, input resetn, input go, inpu
         endcase
     end // state_table
 	
-
+    always@(posedge clk)
+    begin: state_FFs
+        if(!resetn)
+            current_state <= S_INCORRECT;
+        else
+            current_state <= next_state;
+    end // state_FFS
 endmodule
 
 module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_l5,
-					draw_hangman, unmask_letters, game_won);
+					draw_hangman, letter_display, game_won);
 	input clk, resetn;
 	input enable_l1, enable_l2, enable_l3, enable_l4, enable_l5;
-	output [5:0] draw_hangman;
-	output [5:0] unmask_letters;
+	output [5:0] draw_hangman; // draws parts of hangman, 1 for head, 2 for head+hand
 	output reg game_won;
-	
-	reg num_corrects;
-	reg [5:0] increment;
-	reg [5:0] letter_display;
+	reg en_l1, en_l2, en_l3, en_l4, en_l5;
+	reg num_corrects; // number of corrects (due to enable signals)
+	reg [5:0] increment; // basically increments if all enables were 0; the guess was wrong
+	output [5:0] letter_display; // displays letters in binary rep
 	
 	always @(posedge clk)
 	begin: counter
@@ -207,7 +216,11 @@ module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_
 			begin
 			num_corrects <= 0;
 			increment <= 0;
-			letter_display <= 0;
+			en_l1 <= 0;
+			en_l2 <= 0;
+			en_l3 <= 0;
+			en_l4 <= 0;
+			en_l5 <= 0;
 			end
 		else
 			begin
@@ -218,17 +231,21 @@ module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_
 				end
 			else if (enable_l1 || enable_l2 || enable_l3 || enable_l4 || enable_l5)
 				begin
-				num_corrects <= num_corrects + 1'b1;
 				if (enable_l1)
-					letter_display <= 1;
+					en_l1 <= 1;
+					num_corrects <= num_corrects + 1'b1;
 				if (enable_l2)
-					letter_display <= 2;
+					en_l2 <= 1;
+					num_corrects <= num_corrects + 1'b1;
 				if (enable_l3)
-					letter_display <= 3;
+					en_l3 <= 1;
+					num_corrects <= num_corrects + 1'b1;
 				if (enable_l4)
-					letter_display <= 4;
+					en_l4 <= 1;
+					num_corrects <= num_corrects + 1'b1;
 				if (enable_l5)
-					letter_display <= 5;
+					en_l5 <= 1;
+					num_corrects <= num_corrects + 1'b1;
 				end
 			else 
 				increment <= increment + 1'b1;
@@ -240,7 +257,8 @@ module datapath(clk, resetn, enable_l1, enable_l2, enable_l3, enable_l4, enable_
 	end
 	
 	assign draw_hangman = increment;
-	assign unmask_letters = letter_display;
+	assign letter_display = {en_l1, en_l2, en_l3, en_l4, en_l5};
+		
 
 endmodule
 

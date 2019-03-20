@@ -25,7 +25,7 @@ force {letter2[4:0]} 10011
 force {letter3[4:0]} 00000
 force {letter4[4:0]} 11000
 force {letter5[4:0]} 11111
-force {guess[4:0]} 11111
-force {guess[4:0]} 00001
+
+force {guess[4:0]} 00000
 
 run 300ns

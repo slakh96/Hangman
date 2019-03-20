@@ -25,21 +25,4 @@ force {enable_l3} 1
 force {enable_l4} 0
 force {enable_l5} 0
 
-force {enable_l1} 1
-force {enable_l2} 1
-force {enable_l3} 1
-force {enable_l4} 0
-force {enable_l5} 0
-
-force {enable_l1} 0
-force {enable_l2} 0
-force {enable_l3} 0
-force {enable_l4} 0
-force {enable_l5} 0
-
-force {enable_l1} 1
-force {enable_l2} 1
-force {enable_l3} 1
-force {enable_l4} 1
-force {enable_l5} 1
 run 300ns

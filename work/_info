@@ -1,0 +1,180 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/slakh/Documents/0Shahzil/CSC258/Hangman
+vcontrol_letter
+Z1 !s110 1553113978
+!i10b 1
+!s100 WOFbID]XWYDcRleG4Q2_I0
+IehId:QWn6IFadOzEg3aIZ0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+Z3 w1553113350
+Z4 8Hangman.v
+Z5 FHangman.v
+L0 84
+Z6 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z7 !s108 1553113978.000000
+Z8 !s107 Hangman.v|
+Z9 !s90 -reportprogress|300|-timescale|1ns/1ns|Hangman.v|
+!i113 1
+Z10 o-timescale 1ns/1ns
+Z11 tCvgOpt 0
+vcounter_to_hex
+Z12 !s110 1553082143
+!i10b 1
+!s100 FF1_UJA0Y8T[:h1O^zn7L2
+Ii9V6gGDzUX:1=kcTFG9Pf2
+R2
+R0
+Z13 w1553013128
+Z14 8rate_divider.v
+Z15 Frate_divider.v
+L0 56
+R6
+r1
+!s85 0
+31
+Z16 !s108 1553082143.000000
+Z17 !s107 rate_divider.v|
+Z18 !s90 -reportprogress|300|-timescale|1ns/1ns|rate_divider.v|
+!i113 1
+R10
+R11
+vdatapath
+R1
+!i10b 1
+!s100 <@1=MhdTmS0SLcXOTTiRJ2
+I9c:8ngl6c`MQ;QL_5bQ8o1
+R2
+R0
+R3
+R4
+R5
+L0 198
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+R11
+vHangman
+R1
+!i10b 1
+!s100 L9N1DP@W:^z7Rn0LY9H0_1
+IH[6SbKVSm9UdA5N7EzGo]3
+R2
+R0
+R3
+R4
+R5
+L0 1
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+R11
+n@hangman
+vhex_decoder
+R1
+!i10b 1
+!s100 b;:z?5>bz8`1zZ_dCU]6`3
+ISh8:NWUQ:ATHWBcWU63Ca3
+R2
+R0
+R3
+R4
+R5
+L0 254
+R6
+r1
+!s85 0
+31
+R7
+R8
+R9
+!i113 1
+R10
+R11
+vhexdecoder
+R12
+!i10b 1
+!s100 FA1fT=;3BVk=zl3L_b2<I3
+IG0]5z<b;FFaIh5X89>bX^2
+R2
+R0
+R13
+R14
+R15
+L0 124
+R6
+r1
+!s85 0
+31
+R16
+R17
+R18
+!i113 1
+R10
+R11
+vrate_divider
+R12
+!i10b 1
+!s100 AfcS;UhnalW?G=@CAQaoT3
+I9E5KMkQ^EiL17=>J0Q7_20
+R2
+R0
+R13
+R14
+R15
+L0 1
+R6
+r1
+!s85 0
+31
+R16
+R17
+R18
+!i113 1
+R10
+R11
+vRateDelay
+R12
+!i10b 1
+!s100 ^?BMnah5ETjYmDK<h[eLO1
+IS5;;7J@E28^KJn9?7;VZG3
+R2
+R0
+R13
+R14
+R15
+L0 90
+R6
+r1
+!s85 0
+31
+R16
+R17
+R18
+!i113 1
+R10
+R11
+n@rate@delay
