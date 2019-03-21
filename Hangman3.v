@@ -22,7 +22,7 @@ module Hangman3(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, KEY, LEDR, CLOCK_5
     wire [2:0] WrongGuesses;
     wire Valid, Invalid;
     wire [5:0] LetterDisplay1, LetterDisplay2, LetterDisplay3, LetterDisplay4;
-    wire GameStatus;
+	wire [1:0] GameStatus;
 
 		control_unit c1(
 			.guess(SW[5:0]), // User's input guess
@@ -45,7 +45,7 @@ module Hangman3(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, KEY, LEDR, CLOCK_5
 
     assign LEDR[0] = Valid;
     assign LEDR[1] = Invalid;
-    assign LEDR[2] = GameStatus;
+	assign LEDR[2] = GameStatus[0];
 
     hangman_hex H0(
        .hex_digit(LetterDisplay1),
