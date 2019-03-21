@@ -1,10 +1,10 @@
 module hangman_hex(hex_digit, segments);
     input [5:0] hex_digit;
     output reg [6:0] segments;
-		// No letter K, Z,M, V, W, X
+    // No letter K, Z,M, V, W, X
     always @(*)
         case (hex_digit)
-				    6'h0: segments = 7'b111_0111; // The dash line
+	    6'h0: segments = 7'b111_0111; // The dash line
             6'hA: segments = 7'b000_1000; // Letter A
             6'hB: segments = 7'b000_0011; // Letter B
             6'hC: segments = 7'b100_0110; // Letter C
