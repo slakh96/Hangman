@@ -91,8 +91,8 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
 	reg[3:0] correct_guess;
     wire[5:0] next_guess;
 
-    parameter state_zero = 6'b000000;
-    parameter win_state = 6'b111111;
+    parameter state_zero = 4'b0000;
+    parameter win_state = 4'b1111;
 
     reg[2:0] wrong_status;
     wire[2:0] next_wrong_state;
