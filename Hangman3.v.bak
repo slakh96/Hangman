@@ -12,41 +12,40 @@ module Hangman3(SW, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, HEX6, KEY, LEDR, CLOCK_5
     // 1) STAY 2) DARN 3) LEAF 4) HEAD 5) LIFE
 
 		// Eventually need to randomize this
-		reg Dash = 6'h0;
+    reg Dash = 6'h0;
 		reg letter1 = 6'h1C; // Letter S
 		reg letter2 = 6'h1D; // Letter T
 		reg letter3 = 6'hA; // Letter A
 		reg letter4 = 6'h22; // Letter Y
 		reg letter5 = 6'h21; //Dummy value which is not any of the letters, since this is a 4 letter word
 
-		wire [2:0] WrongGuesses;
-		wire Valid, Invalid;
-		wire [5:0] LetterDisplay1, LetterDisplay2, LetterDisplay3, LetterDisplay4;
-		wire [1:0] GameStatus;
+    wire [2:0] WrongGuesses;
+    wire Valid, Invalid;
+    wire [5:0] LetterDisplay1, LetterDisplay2, LetterDisplay3, LetterDisplay4;
+	wire [1:0] GameStatus;
 
 		control_unit c1(
 			.guess(SW[5:0]), // User's input guess
 			.clk(CLOCK_50),
 			.resetn(SW[9]),
 			.dash(Dash),
-			.letter1(letter1), //First letter of the answer
-			.letter2(letter2), //Second letter of the answer
-			.letter3(letter3), //third letter of the answer
-			.letter4(letter4), //fourth letter of the answer
-			.wrong_guesses(WrongGuesses), //This wire holds the number of incorrect guesses of the user
-			.valid(Valid), //Says if the current guess is valid I think
+			.letter1(letter1),
+			.letter2(letter2),
+			.letter3(letter3),
+			.letter4(letter4),
+			.wrong_guesses(WrongGuesses),
+			.valid(Valid),
 			.invalid(Invalid),
-			.letter_display1(LetterDisplay1),//What to send to the hex displays
+			.letter_display1(LetterDisplay1),
 			.letter_display2(LetterDisplay2),
-			.letter_display3(LetterDisplay3),
-			.letter_display4(LetterDisplay4),
-			.game_status(GameStatus), //If we are in PLAY (midgame), LOSE or WIN
-			.go(KEY[3])
+      .letter_display3(LetterDisplay3),
+      .letter_display4(LetterDisplay4),
+			.game_status(GameStatus)
 		);
 
-    assign LEDR[0] = Valid; //If the guess was right
-    assign LEDR[1] = Invalid; //If the guess was wrong
-	assign LEDR[2] = GameStatus[0]; //Lights up only if you lose
+    assign LEDR[0] = Valid;
+    assign LEDR[1] = Invalid;
+	assign LEDR[2] = GameStatus[0];
 
     hangman_hex H0(
        .hex_digit(LetterDisplay1),
@@ -73,28 +72,27 @@ endmodule
 
 module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
                     guess, wrong_guesses, game_status, valid, invalid,
-                    letter_display1, letter_display2, letter_display3, letter_display4, go);
+                    letter_display1, letter_display2, letter_display3, letter_display4);
     input clk, resetn;
-    input [5:0] guess; //What the user guessed on their current guess
-    input [5:0] letter1, letter2, letter3, letter4; //Letters of the correct word
-    input dash; //What to print to the hex if the letter is not yet revealed
-	 input go;
+    input [5:0] guess;
+    input [5:0] letter1, letter2, letter3, letter4;
+    input dash;
 
-    output [2:0] wrong_guesses; //How many wrong guesses the user made over the whole game
+    output [2:0] wrong_guesses;
     output valid, invalid;
-    output [1:0] game_status; //WIN, LOSE or PLAY
-    output [5:0] letter_display1, letter_display2, letter_display3, letter_display4; //What to display to the hex, either dash or the actual letter
+    output [1:0] game_status;
+    output [5:0] letter_display1, letter_display2, letter_display3, letter_display4;
 
     parameter PLAY=2'd0;
     parameter LOSE=2'd1;
     parameter WIN=2'd2;
 
 
-    reg[3:0] correct_guess;
+    reg[5:0] correct_guess;
     wire[5:0] next_guess;
 
-    parameter state_zero = 4'b0000;
-    parameter win_state = 4'b1111;
+    parameter state_zero = 6'b000000;
+    parameter win_state = 6'b111111;
 
     reg[2:0] wrong_status;
     wire[2:0] next_wrong_state;
@@ -106,7 +104,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     parameter wrong3 = 3'b011;
     parameter wrong4 = 3'b100;
 
-    always@((posedge clk & posedge go) or posedge resetn)
+    always@(posedge clk or posedge resetn)
         begin
             if(resetn)
                 begin
@@ -116,13 +114,13 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
 
             else
                 begin
-                correct_guess <= next_guess; //Go to the next state 
-                if(correct_guess != win_state & wrong_status != wrong4) // If game not over yet
+                correct_guess <= next_state;
+                if(guess != win_state & wrong_status != wrong4)
                     wrong_status <= next_wrong_state;
                 end
         end
 
-    assign next_guess[0] = (guess == letter1 & ~correct_guess[0] ? 1'b1 : correct_guess[0]);//Might be overcomplicating things, but I think it works
+    assign next_guess[0] = (guess == letter1 & ~correct_guess[0] ? 1'b1 : correct_guess[0]);
     assign next_guess[1] = (guess == letter2 & ~correct_guess[1] ? 1'b1 : correct_guess[1]);
     assign next_guess[2] = (guess == letter3 & ~correct_guess[2] ? 1'b1 : correct_guess[2]);
     assign next_guess[3] = (guess == letter4 & ~correct_guess[3] ? 1'b1 : correct_guess[3]);
@@ -130,26 +128,29 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     // if ok state, do nothing, otherwise go to the 'next' wrong state
     assign next_wrong_state =
         ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-        | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])) ? wrong_status :
+        | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
+        | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? wrong_status :
             (wrong_status == wrong0 ? wrong1 :
                 (wrong_status == wrong1 ? wrong2 :
                     (wrong_status == wrong2 ? wrong3 :
-                        wrong4))));//wrong state advances when you got a guess wrong...might be overcomplicating things
+                        wrong4))));
 
     assign wrong_guesses = wrong_status;
 
     assign valid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])) ? 1'b0 :
+            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
+            | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? 1'b0 :
                 1'b1);
 
     assign invalid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])) ? 1'b1 :
-                1'b0); //Invalid = ~valid
+            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
+            | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? 1'b1 :
+                1'b0);
 
     // Make the rules
-    assign game_status = (wrong_status == wrong4 ? LOSE : (correct_guess == win_state ? WIN : PLAY));//Sets the gamestate correctly
+    assign game_status = (wrong_status == wrong4 ? LOSE : (correct_guess == win_state ? WIN : PLAY));
     assign letter_display[0] = ((correct_guess[0] == 1'b1) ? letter1 : dash);
-    assign letter_display[1] = ((correct_guess[1] == 1'b1) ? letter2 : dash);//display dash unless the user guessed this particular letter right
+    assign letter_display[1] = ((correct_guess[1] == 1'b1) ? letter2 : dash);
     assign letter_display[2] = ((correct_guess[2] == 1'b1) ? letter3 : dash);
     assign letter_display[3] = ((correct_guess[3] == 1'b1) ? letter4 : dash);
 
