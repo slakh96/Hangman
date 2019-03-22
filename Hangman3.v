@@ -88,7 +88,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     parameter WIN=2'd2;
 
 
-    reg[5:0] correct_guess;
+	reg[3:0] correct_guess;
     wire[5:0] next_guess;
 
     parameter state_zero = 6'b000000;
@@ -114,7 +114,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
 
             else
                 begin
-                correct_guess <= next_state;
+                correct_guess <= next_guess;
                 if(guess != win_state & wrong_status != wrong4)
                     wrong_status <= next_wrong_state;
                 end
@@ -128,8 +128,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     // if ok state, do nothing, otherwise go to the 'next' wrong state
     assign next_wrong_state =
         ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-        | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
-        | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? wrong_status :
+        | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? wrong_status :
             (wrong_status == wrong0 ? wrong1 :
                 (wrong_status == wrong1 ? wrong2 :
                     (wrong_status == wrong2 ? wrong3 :
@@ -138,13 +137,11 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     assign wrong_guesses = wrong_status;
 
     assign valid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
-            | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? 1'b0 :
+            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b0 :
                 1'b1);
 
     assign invalid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3])
-            | (guess == letter5 & ~correct_guess[4]) | (guess == letter6 & ~correct_guess[5]) ? 1'b1 :
+            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b1 :
                 1'b0);
 
     // Make the rules
