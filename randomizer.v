@@ -9,7 +9,7 @@ module randomizer(clock, reset, letter1, letter2, letter3, letter4);
       .rst(reset)
       );
       
-    always @(*)
+always @(posedge clock, posedge reset)
         case (random)
 	          2'd0: // STAY
               begin
