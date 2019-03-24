@@ -93,6 +93,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     wire [3:0] next_guess;
 	 reg[2:0] number_of_incorrect_guesses;
 	 reg flag;
+	 reg in;
 
     parameter state_zero = 4'b0000;
     parameter win_state = 4'b1111;
@@ -113,6 +114,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
                 correct_guess <= state_zero;
                 wrong_status <= wrong0; //Wrong status: to show the number of wrong guesses
 					 number_of_incorrect_guesses <= 0;
+					 in <= 1'b0;
 					 flag <= 1;
                 end
 
@@ -127,8 +129,11 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
 					 if (~((guess == letter1) | (guess == letter2) | (guess == letter3) | (guess == letter4)))
 							begin
 							number_of_incorrect_guesses <= number_of_incorrect_guesses + 1'b1;
+							in <= 1'b1;
 							flag <= 0;
 							end
+					 else 
+						    in <= 1'b0;
                 end
 				else if (!go)
 					flag <= 1;
@@ -153,13 +158,17 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     //assign wrong_guesses = wrong_status;//Assigns the number of wrong guesses to the output
 	 assign wrong_guesses = number_of_incorrect_guesses;
 
-    assign invalid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b0 :
-                1'b1);
+    //assign invalid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
+            //| (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b0 :
+              //  1'b1);
+				  
+				  assign invalid = in;
 
-    assign valid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
-            | (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b1 :
-                1'b0); //Invalid = ~valid
+    //assign valid =  ((guess == letter1 & ~correct_guess[0]) | (guess == letter2 & ~correct_guess[1])
+            //| (guess == letter3 & ~correct_guess[2]) | (guess == letter4 & ~correct_guess[3]) ? 1'b1 :
+               // 1'b0); //Invalid = ~valid
+					
+					assign valid = ~invalid;
 
     // Make the rules
     assign game_status = (wrong_status == wrong4 ? LOSE : (correct_guess == win_state ? WIN : PLAY));//Sets the gamestate correctly
