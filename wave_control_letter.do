@@ -17,17 +17,78 @@ log {/*}
 add wave {/*}
 force {clk} 0 0, 1 5 -r 10
 force {resetn} 0 0, 1 10
-force {go} 0 0, 1 10 -r 20
+force {go} 0
 force {letter1[5:0]} 100100
 force {letter2[5:0]} 100110
 force {letter3[5:0]} 111111
 force {letter4[5:0]} 110000
-force {guess[5:0]} 111111
 force {dash[5:0]} 000000
+force {guess[5:0]} 111111
+
+force {go} 0
+run 10ns
+
+force {go} 1
 run 300ns
 
 force {clk} 0 0, 1 5 -r 10
-force {go} 0 0, 1 10 -r 20
+#force {go} 0 0, 1 10 -r 20
 force {guess[5:0]} 100110
 
+force {go} 0
+run 10ns
+
+force {go} 1
 run 300ns
+
+force {clk} 0 0, 1 5 -r 10
+#force {go} 0 0, 1 10 -r 20
+force {guess[5:0]} 000001
+
+force {go} 0
+run 10ns
+
+force {go} 1
+run 300ns
+
+force {clk} 0 0, 1 5 -r 10
+#force {go} 0 0, 1 10 -r 20
+force {guess[5:0]} 000001
+
+force {go} 0
+run 10ns
+
+force {go} 1
+run 300ns
+
+force {clk} 0 0, 1 5 -r 10
+#force {go} 0 0, 1 10 -r 20
+force {guess[5:0]} 100100
+
+force {go} 0
+run 10ns
+
+force {go} 1
+run 300ns
+
+force {clk} 0 0, 1 5 -r 10
+#force {go} 0 0, 1 10 -r 20
+force {guess[5:0]} 110000
+
+force {go} 0
+run 10ns
+
+force {go} 1
+run 300ns
+
+force {clk} 0 0, 1 5 -r 10
+#force {go} 0 0, 1 10 -r 20
+force {guess[5:0]} 001001
+
+force {go} 0
+run 10ns
+
+force {go} 1
+run 300ns
+
+

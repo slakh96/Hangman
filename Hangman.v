@@ -92,6 +92,7 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     reg[3:0] correct_guess;
     wire [3:0] next_guess;
 	 reg[2:0] number_of_incorrect_guesses;
+	 reg flag;
 
     parameter state_zero = 4'b0000;
     parameter win_state = 4'b1111;
@@ -105,16 +106,17 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
     parameter wrong3 = 3'b011;
     parameter wrong4 = 3'b100;
 
-    always @(posedge clk or posedge resetn)//Might need to fix this!
+    always @(posedge clk, posedge go, posedge resetn)//Might need to fix this!
         begin
             if(~resetn)
                 begin
                 correct_guess <= state_zero;
                 wrong_status <= wrong0; //Wrong status: to show the number of wrong guesses
 					 number_of_incorrect_guesses <= 0;
+					 flag <= 1;
                 end
 
-            else
+            else if (go && flag)
                 begin
                 correct_guess <= next_guess;
                 //if(correct_guess != win_state & wrong_status != wrong4) // If game not over yet
@@ -124,9 +126,12 @@ module control_unit(clk, resetn, dash, letter1, letter2, letter3, letter4,
                     wrong_status <= next_wrong_state;//Assigns the next number of wrong guesses correctly
 					 if (~((guess == letter1) | (guess == letter2) | (guess == letter3) | (guess == letter4)))
 							begin
-							assign number_of_incorrect_guesses = number_of_incorrect_guesses + 1'b1;
+							number_of_incorrect_guesses <= number_of_incorrect_guesses + 1'b1;
+							flag <= 0;
 							end
                 end
+				else if (!go)
+					flag <= 1;
         end
 
     assign next_guess[0] = (guess == letter1 & ~correct_guess[0] ? 1'b1 : correct_guess[0]);//Might be overcomplicating things, but I think it works
