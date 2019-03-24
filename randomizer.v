@@ -1,5 +1,6 @@
-module randomizer(random, clock, reset, letter1, letter2, letter3, letter4);
-    input [1:0] random;
+module randomizer(clock, reset, letter1, letter2, letter3, letter4);
+    input clock, reset;
+    reg [1:0] random;
     output reg [5:0] letter1, letter2, letter3, letter4;
     
     lsfr l1 (
