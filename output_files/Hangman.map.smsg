@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at Hangman.v(203): always construct contains both blocking and non-blocking assignments File: C:/Users/slakh/Documents/0Shahzil/CSC258/Hangman/Hangman.v Line: 203
+Info (10281): Verilog HDL Declaration information at Hangman.v(113): object "H0" differs only in case from object "h0" in the same scope File: C:/Users/slakh/Documents/0Shahzil/CSC258/HangmanV3/Hangman/Hangman.v Line: 113

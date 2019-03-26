@@ -1,7 +1,13 @@
 
-State Machine - |Hangman|control_letter:c1|current_state
-Name current_state.S_CORRECT_WAIT current_state.S_CORRECT current_state.S_INCORRECT_WAIT current_state.S_INCORRECT 
-current_state.S_INCORRECT 0 0 0 0 
-current_state.S_INCORRECT_WAIT 0 0 1 1 
-current_state.S_CORRECT 0 1 0 1 
-current_state.S_CORRECT_WAIT 1 0 0 1 
+State Machine - |Hangman|controller:c0|current_state
+Name current_state.S_LOSE_WAIT current_state.S_WIN_WAIT current_state.S_LOSE current_state.S_WIN current_state.S_INCORRECT_WAIT current_state.S_INCORRECT current_state.S_CORRECT_WAIT current_state.S_CORRECT current_state.S_START_WAIT current_state.S_START 
+current_state.S_START 0 0 0 0 0 0 0 0 0 0 
+current_state.S_START_WAIT 0 0 0 0 0 0 0 0 1 1 
+current_state.S_CORRECT 0 0 0 0 0 0 0 1 0 1 
+current_state.S_CORRECT_WAIT 0 0 0 0 0 0 1 0 0 1 
+current_state.S_INCORRECT 0 0 0 0 0 1 0 0 0 1 
+current_state.S_INCORRECT_WAIT 0 0 0 0 1 0 0 0 0 1 
+current_state.S_WIN 0 0 0 1 0 0 0 0 0 1 
+current_state.S_LOSE 0 0 1 0 0 0 0 0 0 1 
+current_state.S_WIN_WAIT 0 1 0 0 0 0 0 0 0 1 
+current_state.S_LOSE_WAIT 1 0 0 0 0 0 0 0 0 1 

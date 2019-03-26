@@ -1,9 +1,8 @@
-module rate_divider(resetn, LEDR, HEX0, CLOCK_50, enable);
+module rate_divider(resetn, counter_val, CLOCK_50, enable);
 input resetn;
 input CLOCK_50;
 input enable;
-output[6:0] HEX0;
-output[9:0] LEDR;
+output[5:0] counter_val;
 wire [27:0] delay_value;
 wire [5:0]output_of_counter;
 wire toggle_enable_for_hex_counter;
@@ -12,7 +11,7 @@ wire[27:0] period_val;
 //101111101011110000100000000 is 100 000 000
 //10111110101111000010000000 is 50 000 000
 //assign period_val = 28'b10111110101111000010000000;//one second
-assign period_val = 28'b0000000000000000000000000101;//5, for testing purposes
+assign period_val = 28'b0000000000000000000000001001;//9, for testing purposes, 9 clock cycles
 //hexdecoder h0(
 //	.A(output_of_counter[3]),
 //	.B(output_of_counter[2]),
@@ -42,13 +41,13 @@ counter_to_hex c1(
 	.reset_n(resetn),
 	.par_load(1'b0),//If we should load a new value or not...eventually need to turn this to 1 whenever a new round starts
 	.second_passed(toggle_enable_for_hex_counter),//Rate delay enables this every 1 second
-	.time_limit(6'b100000), //Hangman's time limit...rn it is 16 seconds
+	.time_limit(6'b000111), //Hangman's time limit...rn it is 5 seconds
 	.enable(1'b1),//To enable this counter, e.g. when the game started being played
 	.q(output_of_counter)
 );
-assign LEDR[3:0] = output_of_counter[3:0];
-assign LEDR[8:4] = 5'b00000;
-assign LEDR[9] = toggle_enable_for_hex_counter;
+assign counter_val[5:0] = output_of_counter[5:0];
+//assign LEDR[8:4] = 5'b00000;
+//assign LEDR[9] = toggle_enable_for_hex_counter;
 //assign LEDR[3:0] = output_of_counter;
 
 endmodule
@@ -121,38 +120,38 @@ module RateDelay(d, clock, reset_n, q, toggle_enable_for_hex_counter);
 	
 	
 endmodule
-
-module hexdecoder(A,B,C,D, hex0, hex1, hex2, hex3, hex4, hex5, hex6);
-	input A, B, C, D;
-	output hex0, hex1, hex2, hex3, hex4, hex5, hex6;
-	assign hex0 =  ~A & ~B & ~C & D |
-	~A & B & ~C & ~D |
-	A & ~B & C & D |
-	A & B & ~C & D;
-	assign hex1 = ~A & B & ~C & D |
-	A & C & D |
-	B & C & ~D |
-	A & B & ~D;
-
-	assign hex2 = A & B & ~D |
-	~A & ~B & C & ~D |
-	A & B & C;
-	assign hex3 = ~A & B & ~C & ~D |
-	~A & ~B & ~C & D |
-	A & ~B & ~C & D |
-	B & C & D |
-	A & ~B & C & ~D;
-	assign hex4 = ~A & B & ~C |
-	~A & D |
-	~B & ~C & D;
-	assign hex5 = A & B & ~C & D |
-	~A & ~B & D |
-	~A & C & D |
-	~A & ~B & C;
-	assign hex6 = ~A & ~B & ~C|
-	~A & B & C & D |
-	A & B & ~C & ~D;
-
-	
-	
-endmodule	
+//
+//module hexdecoder(A,B,C,D, hex0, hex1, hex2, hex3, hex4, hex5, hex6);
+//	input A, B, C, D;
+//	output hex0, hex1, hex2, hex3, hex4, hex5, hex6;
+//	assign hex0 =  ~A & ~B & ~C & D |
+//	~A & B & ~C & ~D |
+//	A & ~B & C & D |
+//	A & B & ~C & D;
+//	assign hex1 = ~A & B & ~C & D |
+//	A & C & D |
+//	B & C & ~D |
+//	A & B & ~D;
+//
+//	assign hex2 = A & B & ~D |
+//	~A & ~B & C & ~D |
+//	A & B & C;
+//	assign hex3 = ~A & B & ~C & ~D |
+//	~A & ~B & ~C & D |
+//	A & ~B & ~C & D |
+//	B & C & D |
+//	A & ~B & C & ~D;
+//	assign hex4 = ~A & B & ~C |
+//	~A & D |
+//	~B & ~C & D;
+//	assign hex5 = A & B & ~C & D |
+//	~A & ~B & D |
+//	~A & C & D |
+//	~A & ~B & C;
+//	assign hex6 = ~A & ~B & ~C|
+//	~A & B & C & D |
+//	A & B & ~C & ~D;
+//
+//	
+//	
+//endmodule	
